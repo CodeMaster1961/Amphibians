@@ -6,11 +6,15 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 
+interface AppContainer {
+    val amphibiansRepository: AmphibiansRepository
+}
+
 /**
  * @author Ömer Aynaci
  * default container to get data from internet
  */
-class DefaultContainer {
+class DefaultContainer : AppContainer {
     private val baseUrl = "https://android-kotlin-fun-mars-server.appspot.com"
 
     private val retrofit = Retrofit.Builder()
@@ -20,5 +24,9 @@ class DefaultContainer {
 
     private val retrofitService: AmphibianApiService by lazy {
         retrofit.create(AmphibianApiService::class.java)
+    }
+
+    override val amphibiansRepository: AmphibiansRepository by lazy {
+        NetworkAmphibiansRepository(retrofitService)
     }
 }
