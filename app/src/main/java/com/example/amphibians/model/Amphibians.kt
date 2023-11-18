@@ -8,6 +8,6 @@ data class Amphibians(
     val name: String,
     val type: String,
     val description: String,
-    @SerialName("img_src")
+    @SerialName(value = "img_src")
     val imgSrc: String
 )
